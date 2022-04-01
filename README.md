@@ -1,5 +1,10 @@
+<h1 align="center">Advanced Javascript</h1>
+
 <details>
 <summary>Objects</summary>
+
+## Objects
+
 <hr/>
 Collection of `key-value` pairs.
 
@@ -20,7 +25,7 @@ Best practice is to use `let` or `const`, dont use `var`. `var` has issues with 
 
 This is called `object-literal` syntax. From the above object literal, we can say that **draw** is a **method** and **radius** and **location** are **properties**.
 
-There are 2 types of functions when it comes to construct objects, `Factory Fucntions` and `Constructor Functions`. In modern JS, factory functions are preferred, and it throws error if the `new` keyword is not used.
+There are 2 types of functions when it comes to construct objects, `Factory Fucntions` and `Constructor Functions`. In modern JS, Constructor functions are preferred, and it throws error if the `new` keyword is not used.
 
 ### Factories / Factory Functions
 
@@ -188,6 +193,88 @@ Now you can get the property using;
 Or set using:
 
         circle.location = {x: 2}
+
+<hr/>
+
+</details>
+
+<details>
+<summary>Prototype</summary>
+
+## Prototype
+
+<hr/>
+
+### Inheritence (is a)
+
+Lets say there is an object circle with a method calculateLocation(), we also have another object named square and it also has the same method calculateLocation(). Now we dont want to implement this in both objects, rather we can create a Super class named Shape and child classes will be circle and square. Shape will contain the method and it child classes will implement that method.
+
+### Prototypical Inheritence
+
+When ever you hear `prototype`, **it means parent object in JS**. There are no classes in JS, so to understand and implement the above inheritence problem, we will use objects. Every object that we create in JS has an ultimate parent/prototype, just like in Java every field has an ultimate parent called object. to understand this, goto console of chrome and type:
+
+    let x = {value: 3}; // enter
+
+and then:
+
+    x // type x and enter
+
+This will display a **proto** property, which will show the parent/prototype object.
+
+To get the prototype of a specific object, we use
+
+    Object.getPrototypeOf(objectName);
+
+when you try to access a method/property in an object, like `circle.toString()`, first it finds it in object itself, if not found, it finds it in its `prototype` object, if not found it finds it in the ultimate prototype/parent.
+
+### Multilevel Inheritence
+
+If we create an array, it will also have its ultimate parent/proptotype called `ArrayBase`, and the relationship is same of that an object. This ArrayBase is also derived from `ObjectBase` which is the ultimate prototype of each and every object in JS.
+
+                                _____________________
+                                |                   |
+                        _______>|   Object Base     |
+                        |       |---------------^---|
+                        |                       |
+                    _____________________       |
+                    |                   |       |
+            _______>|   Array Base      |       |
+            |       |-------------------|       |
+            |                                   |
+        _____________________           _________________
+        |                   |           |               |
+        |   Array           |           |   Object      |
+        |-------------------|           |---------------|
+
+The Constructor Function is actually a prototype, when we create an abject using `Constructor Function`, we are actually creating a prototype.
+
+    function Circle(radius) {
+    this.radius = radius;
+    this.draw = () => console.log("draw");
+    }
+
+    const myCircle = new Circle(2);
+
+We are creating something like this from the above code:
+
+                                _____________________
+                                |                   |
+                        _______>|   Object Base     |
+                        |       |-------------------|
+                        |
+                    _____________________
+                    |                   |
+            _______>|   Circle          |
+            |       |-------------------|
+            |
+        _____________________
+        |                   |
+        |   myCircle        |
+        |-------------------|
+
+If we use that Circle Constructor method again to create more objects, Circle will be the prototype of all these objects.
+
+### Property Descriptors
 
 <hr/>
 </details>
