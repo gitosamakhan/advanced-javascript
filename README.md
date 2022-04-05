@@ -276,5 +276,39 @@ If we use that Circle Constructor method again to create more objects, Circle wi
 
 ### Property Descriptors
 
+Property descriptor is information about the property of an object, that it can be overriden, change, enumurated etc. Lets assume the code below where we are checking the property descriptor of `toString` method of the ultimate parent `ObjectBase`:
+
+    let person = { name: "osama" };
+    let objectBase = Object.getPrototypeOf(person);
+    let descriptor = Object.getOwnPropertyDescriptor(objectBase, "toString");
+    console.log(descriptor);
+
+Running this code will give us the below result in console:
+
+    configurable: true          // we can delete this member
+    enumerable: false           // this method is not visible for keys/values of object.
+    value: ƒ toString()
+    writable: true              // you can override this, change value
+    [[Prototype]]: Object
+    (index):40 Live reload enabled.
+
+We can also set property descriptors for our own objects properties. See the following code below:
+
+    let person = { name: "osama" };
+
+    Object.defineProperty(person, "name", {
+        writable: false,            // name property can be changes, its value can be changed
+        enumerable: true,           // if we enumerate keys, we will see "name" key
+        configurable: false,        // we can not delete this property "name".
+    });
+
+### Constructor Prototypes
+
+Constructors to create objects are also methods, and they also have prototypes because they are also object, remember, methods, arrays and objects are objects.
+
+So if we use `Circle` constructor to create `myCircle` object. the prototype of `Circle Constructor` and `myCircle` object will be the same.
+
+When we create an array like `let array = []`, here `= []` means `new Array()`, and the same goes for objects when we use `= {}`. Objects, Arrays and methods, they have there own prototype(set of methods and fields), and there ultimate prototype is `objectBase`.
+
 <hr/>
 </details>
