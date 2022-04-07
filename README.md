@@ -205,6 +205,8 @@ Or set using:
 
 <hr/>
 
+`When working with inheritence, best practice is not to use arrow functions, use function keyword instead`
+
 ### Inheritence (is a)
 
 Lets say there is an object circle with a method calculateLocation(), we also have another object named square and it also has the same method calculateLocation(). Now we dont want to implement this in both objects, rather we can create a Super class named Shape and child classes will be circle and square. Shape will contain the method and it child classes will implement that method.
@@ -310,5 +312,67 @@ So if we use `Circle` constructor to create `myCircle` object. the prototype of 
 
 When we create an array like `let array = []`, here `= []` means `new Array()`, and the same goes for objects when we use `= {}`. Objects, Arrays and methods, they have there own prototype(set of methods and fields), and there ultimate prototype is `objectBase`.
 
+### Prototype vs Instance Methods
+
+Consider the code below:
+
+    function Circle(radius) {
+        this.radius = radius;
+        this.draw = () => console.log("draw");
+    }
+    const c1 = new Circle(1);
+    const c2 = new Circle(2);
+
+In the code above, lets consider we have a lot of circles in memory, its not good to have the same method draw in each object, so we can add this method in `CircleBase`.
+
+    function Circle(radius) {
+        this.radius = radius;                                   // instance members
+    }
+
+    Circle.prototype.draw = () => console.log("draw");          // prototype members
+
+    const c1 = new Circle(1);
+    const c2 = new Circle(2);
+
+    Circle.prototype.toString = function () {
+        console.log("Circle with Radius: " + this.radius);
+    };
+
+As we know that if we call an object in JS, it looks for it in the object and if not found, JS finds it in prototype object. According to that, we can add a method in our CircleBase. The above code also shows `instance members` and `prototype members`. You can also override the CircleBase Prototype members accordingly.
+
+Another Important thing to note is that you can call instance members in prototypical members and the other way arount.
+
+### Iterating Instance and Prototype members
+
+In the JS world, the members that are the part of object are called own members or own property. The word own is being used for them, and the other are called prototype members. `c1.hasOwnProperty("propertyName")` is one of the methods that returns a boolean if the key exists in the object. See the following code on how to interate through own and prototype members:
+
+    // Returns Instance members (OwnMembers)
+    console.log(Object.keys(c1));
+
+    // Returns all members (instance/own + prototype mambers)
+    for (let key in c1) console.log(key);
+
+### Avoid extending the Built-in Objects
+
+We should not modify to the build in objects just like this:
+
+    Array.prototype.doSomething = function() {
+        // .. do something
+    }
+
+    const array = [];
+    array.doSomething();
+
+We can modify the base prototype but not the ultimate prototype. Only extend the prototypes that we created ourself from constructor methods.
+
 <hr/>
+</details>
+
+<details>
+<summary>Prototypical Inheritence</summary>
+
+# Prototypical Inheritence
+
+<hr/>
+
 </details>
