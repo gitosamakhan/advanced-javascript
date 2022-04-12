@@ -1,11 +1,12 @@
-<h1 align="center">Advanced Javascript</h1>
+<h1 align="center">Advanced Javascript 👾 </h1>
+
+Notes on advanced javascript. Prototypes, Prototypical Inheritence, ES6 Classses and Tooling. Curriculum is shown below. Click on the topic to expand notes. Happy Learning 🤓
 
 <details>
 <summary>Objects</summary>
 
-## Objects
+<h2 align="center">Objects</h2>
 
-<hr/>
 Collection of `key-value` pairs.
 
 ### Object Literals
@@ -101,7 +102,7 @@ and
         increment(number);
         console.log(number); // {value: 11}
 
-### Adding properties
+### Adding properties to object literal
 
         function Circle(radius) {
             console.log("this: ", this);
@@ -118,7 +119,7 @@ and
         const propertyName = "location2";
         circle[propertyName] = { y: 2 };
 
-### Removing properties
+### Removing properties from object literal
 
         delete circle.location;
 
@@ -199,11 +200,9 @@ Or set using:
 </details>
 
 <details>
-<summary>Prototype</summary>
+<summary>Prototypes</summary>
 
-## Prototype
-
-<hr/>
+<h2 align="center">Prototypes</h2>
 
 `When working with inheritence, best practice is not to use arrow functions, use function keyword instead`
 
@@ -366,13 +365,30 @@ We should not modify to the build in objects just like this:
 We can modify the base prototype but not the ultimate prototype. Only extend the prototypes that we created ourself from constructor methods.
 
 <hr/>
+
 </details>
 
 <details>
 <summary>Prototypical Inheritence</summary>
 
-# Prototypical Inheritence
+<h2 align="center">Prototypical Inheritence</h2>
+
+### Create your own Prototypical Inheritence
 
 <hr/>
+
+</details>
+
+<details>
+<summary>ES6 Classes</summary>
+
+<h2 align="center">ES6 Classes</h2>
+
+</details>
+
+<details>
+<summary>ES6 Tooling</summary>
+
+<h2 align="center">ES6 Tooling</h2>
 
 </details>
