@@ -1,23 +1,22 @@
-let person = { name: "osama" };
-let objectBase = Object.getPrototypeOf(person);
-let descriptor = Object.getOwnPropertyDescriptor(objectBase, "toString");
-console.log(descriptor);
+function Shape(color) {
+  this.color = color;
+}
 
-Object.defineProperty(person, "name", {
-  writable: false,
-  enumerable: true,
-  configurable: false,
-});
-
-function Circle(radius) {
+function Circle(radius, color) {
+  Shape.call(this, color);
   this.radius = radius;
 }
 
-Circle.prototype.draw = () => console.log("draw");
-
-const c1 = new Circle(1);
-const c2 = new Circle(2);
-
-Circle.prototype.toString = function () {
-  console.log("Circle with Radius: " + this.radius);
+Shape.prototype.duplicate = function () {
+  console.log("duplicate");
 };
+
+Circle.prototype = Object.create(Shape.prototype);
+Circle.prototype.constructor = Circle;
+
+Circle.prototype.draw = function () {
+  console.log("draw");
+};
+
+const c = new Circle(1, "red");
+c.duplicate();

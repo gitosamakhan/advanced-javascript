@@ -371,9 +371,145 @@ We can modify the base prototype but not the ultimate prototype. Only extend the
 <details>
 <summary>Prototypical Inheritence</summary>
 
-<h2 align="center">Prototypical Inheritence</h2>
+<h1 align="center">Prototypical Inheritence</h1>
 
-### Create your own Prototypical Inheritence
+## Create your own Prototypical Inheritence
+
+Lets create a situation where inheritence is required:
+Lets say there is a circle object shown below:
+
+    function Circle(radius) {
+        this.radius = radius;
+    }
+
+    Circle.prototype.draw = function () {
+        console.log("draw");
+    };
+
+    Circle.prototype.duplicate = function () {
+        console.log("duplicate");
+    };
+
+    const c = new Circle(1);
+
+From the above code, we can build a relationship like this:
+
+                                _____________________
+                                |                   |
+                        _______>|   Object Base     |
+                        |       |-------------------|
+                        |
+                    _____________________
+                    |                   |
+            _______>|   CircleBase      |
+            |       |-------------------|
+            |
+        _____________________
+        |                   |
+        |   c               |
+        |-------------------|
+
+Now what if we needed a shape called square, now square would probably have the same draw and duplicate method. For this we need to create a `Shape` object and implement those methods in Shape, and inherit all the objects from Shape.
+
+    function Shape() {}
+
+    function Circle(radius) {
+        this.radius = radius;
+    }
+
+    Shape.prototype.duplicate = function () {
+        console.log("duplicate");
+    };
+
+    Circle.prototype = Object.create(Shape.prototype);
+
+    Circle.prototype.draw = function () {
+        console.log("draw");
+    };
+
+    const c = new Circle(1);
+    c.duplicate();
+
+Now we updated out relationship to this:
+
+                                _____________________           _____________________
+                                |                   |           |                   |
+                        _______>|   ShapeBase       |---------->|   ObjectBase      |
+                        |       |-------------------|           |___________________|
+                        |
+                    _____________________
+                    |                   |
+            _______>|   CircleBase      |
+            |       |-------------------|
+            |
+        _____________________
+        |                   |
+        |   c               |
+        |-------------------|
+
+Heirarchy in console looks like this:
+
+    Circle {radius: 1}
+        radius: 1
+        [[Prototype]]: Shape                        -----> Dont get confused by this shape ( this is crcile base actually)
+            draw: ƒ ()
+            [[Prototype]]: Object
+                duplicate: ƒ ()
+                constructor: ƒ Shape()
+                [[Prototype]]: Object               -----> ObjectBase
+
+In theory whats happening here is we are setting the CircleBase with an object of Shape.
+
+## Resetting the constructor
+
+Whenever we are resetting the Prototype we should also reset the constructor to avoid bugs and it also helps in future situations. The code in previous topic is updated to this:
+
+    function Shape() {}
+
+    function Circle(radius) {
+        this.radius = radius;
+    }
+
+    Shape.prototype.duplicate = function () {
+        console.log("duplicate");
+    };
+
+    Circle.prototype = Object.create(Shape.prototype);
+    Circle.prototype.constructor = Circle;
+
+    Circle.prototype.draw = function () {
+        console.log("draw");
+    };
+
+    const c = new Circle(1);
+    c.duplicate();
+
+## Calling the Super Constructor
+
+lets say we want to introduce a new property inside the shape constructor. But by default it will not show up in the object after running the code. The reason for that is shape is not being created using the `new` keyword, so `this` would not point to shape, it would point to the global object. The way to do it is this:
+
+    function Shape(color) {
+        this.color = color;
+    }
+
+    function Circle(radius, color) {
+        Shape.call(this, color);
+        this.radius = radius;
+    }
+
+    Shape.prototype.duplicate = function () {
+        console.log("duplicate");
+    };
+
+    Circle.prototype = Object.create(Shape.prototype);
+    Circle.prototype.constructor = Circle;
+
+    Circle.prototype.draw = function () {
+        console.log("draw");
+    };
+
+    const c = new Circle(1, "red");
+    c.duplicate();
 
 <hr/>
 
